@@ -2,15 +2,18 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import MealList from "../components/dashboard/MealList"
+import PredictionSummary from "../components/dashboard/PredictionSummary"
 import StatCard from "../components/dashboard/StatCard"
 import WeightSummary from "../components/dashboard/WeightSummary"
 import { getDietEntries, getWeightHistory } from "../services/diet"
+import { getPredictions } from "../services/prediction"
 
 function Dashboard() {
   const navigate = useNavigate()
 
   const [meals, setMeals] = useState([])
   const [weights, setWeights] = useState([])
+  const [predictions, setPredictions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -24,13 +27,16 @@ function Dashboard() {
       }
 
       try {
-        const [mealData, weightData] = await Promise.all([
-          getDietEntries(token),
-          getWeightHistory(token),
-        ])
+        const [mealData, weightData, predictionData] =
+          await Promise.all([
+            getDietEntries(token),
+            getWeightHistory(token),
+            getPredictions(token),
+          ])
 
         setMeals(mealData)
         setWeights(weightData)
+        setPredictions(predictionData)
       } catch (err) {
         if (err.response?.status === 401) {
           localStorage.removeItem("dietly_token")
@@ -41,7 +47,7 @@ function Dashboard() {
 
         setError(
           err.response?.data?.detail ||
-            "Unable to load your dashboard.",
+            "Failed to load dashboard data.",
         )
       } finally {
         setIsLoading(false)
@@ -51,16 +57,12 @@ function Dashboard() {
     loadDashboard()
   }, [navigate])
 
-  const user = JSON.parse(
-    localStorage.getItem("dietly_user") || "null",
-  )
-
   const totalCalories = meals.reduce(
     (total, meal) => total + Number(meal.calories || 0),
     0,
   )
 
-  const latestWeight = weights[0]?.weight ?? "-"
+  const latestWeight = weights[0]
 
   if (isLoading) {
     return (
@@ -81,43 +83,40 @@ function Dashboard() {
               Your nutrition overview
             </span>
 
-            <h1>
-              Welcome back{user?.username ? `, ${user.username}` : ""}.
-            </h1>
+            <h1>Welcome back.</h1>
 
             <p>
-              Keep tracking your meals and weight to stay on
-              top of your progress.
+              Keep an eye on your meals, weight, and projected progress.
             </p>
           </div>
 
           <Link to="/tracker" className="button button-primary">
-            Track today
+            Track progress
           </Link>
         </header>
 
-        {error && (
-          <div className="dashboard-error">
-            {error}
-          </div>
-        )}
+        {error && <div className="dashboard-error">{error}</div>}
 
         <section className="dashboard-stats">
           <StatCard
-            label="Meals recorded"
-            value={meals.length}
-            description="Total meals in your history"
+            label="Calories tracked"
+            value={`${totalCalories} kcal`}
+            description="Total calories in your recorded meals"
           />
 
           <StatCard
-            label="Calories logged"
-            value={`${totalCalories} kcal`}
-            description="Total calories recorded"
+            label="Meals tracked"
+            value={meals.length}
+            description="Meals currently in your nutrition history"
           />
 
           <StatCard
             label="Current weight"
-            value={latestWeight === "-" ? "-" : `${latestWeight} kg`}
+            value={
+              latestWeight
+                ? `${latestWeight.weight} kg`
+                : "—"
+            }
             description="Latest recorded weight"
           />
         </section>
@@ -125,6 +124,10 @@ function Dashboard() {
         <div className="dashboard-grid">
           <MealList meals={meals} />
           <WeightSummary weights={weights} />
+        </div>
+
+        <div className="dashboard-grid dashboard-prediction-grid">
+          <PredictionSummary predictions={predictions} />
         </div>
       </div>
     </main>

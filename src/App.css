@@ -801,3 +801,7 @@
     grid-template-columns: 1fr;
   }
 }
+
+.dashboard-prediction-grid {
+  margin-top: 24px;
+}
