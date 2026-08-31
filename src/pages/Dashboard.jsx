@@ -7,6 +7,7 @@ import StatCard from "../components/dashboard/StatCard"
 import WeightSummary from "../components/dashboard/WeightSummary"
 import { getDietEntries, getWeightHistory } from "../services/diet"
 import { getPredictions } from "../services/prediction"
+import { logoutUser } from "../services/auth"
 
 function Dashboard() {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ function Dashboard() {
   const [weights, setWeights] = useState([])
   const [predictions, setPredictions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const [error, setError] = useState("")
 
   useEffect(() => {
@@ -57,6 +59,31 @@ function Dashboard() {
     loadDashboard()
   }, [navigate])
 
+  async function handleLogout() {
+    const token = localStorage.getItem("dietly_token")
+
+    setIsLoggingOut(true)
+    setError("")
+
+    try {
+      if (token) {
+        await logoutUser(token)
+      }
+    } catch (err) {
+      if (err.response?.status !== 401) {
+        setError(
+          err.response?.data?.detail ||
+            "Logout request failed. Ending local session.",
+        )
+      }
+    } finally {
+      localStorage.removeItem("dietly_token")
+      localStorage.removeItem("dietly_user")
+      navigate("/login", { replace: true })
+      setIsLoggingOut(false)
+    }
+  }
+
   const totalCalories = meals.reduce(
     (total, meal) => total + Number(meal.calories || 0),
     0,
@@ -90,9 +117,23 @@ function Dashboard() {
             </p>
           </div>
 
-          <Link to="/tracker" className="button button-primary">
-            Track progress
-          </Link>
+          <div className="dashboard-header-actions">
+            <Link
+              to="/tracker"
+              className="button button-primary"
+            >
+              Track progress
+            </Link>
+
+            <button
+              type="button"
+              className="button button-secondary"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+            >
+              {isLoggingOut ? "Logging out..." : "Log out"}
+            </button>
+          </div>
         </header>
 
         {error && <div className="dashboard-error">{error}</div>}

@@ -805,3 +805,17 @@
 .dashboard-prediction-grid {
   margin-top: 24px;
 }
+
+.dashboard-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 800px) {
+  .dashboard-header-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
