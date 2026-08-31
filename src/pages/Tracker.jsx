@@ -1,108 +1,93 @@
-import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import MealForm from "../components/tracker/MealForm"
-import MealHistory from "../components/tracker/MealHistory"
-import PredictionForm from "../components/tracker/PredictionForm"
-import WeightForm from "../components/tracker/WeightForm"
-import WeightSummary from "../components/dashboard/WeightSummary"
-import { getDietEntries, getWeightHistory } from "../services/diet"
-import PredictionSummary from "../components/dashboard/PredictionSummary"
-
+import MealForm from "../components/tracker/MealForm";
+import MealHistory from "../components/tracker/MealHistory";
+import PredictionForm from "../components/tracker/PredictionForm";
+import WeightForm from "../components/tracker/WeightForm";
+import WeightSummary from "../components/dashboard/WeightSummary";
+import { getDietEntries, getWeightHistory } from "../services/diet";
+import PredictionSummary from "../components/dashboard/PredictionSummary";
+import { getPredictions } from "../services/prediction";
 
 function Tracker() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [meals, setMeals] = useState([])
-  const [weights, setWeights] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState("")
-  const [predictions, setPredictions] = useState([])
-
-
+  const [meals, setMeals] = useState([]);
+  const [weights, setWeights] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [predictions, setPredictions] = useState([]);
 
   function handleWeightCreated(newWeight) {
-    setWeights((current) => [newWeight, ...current])
+    setWeights((current) => [newWeight, ...current]);
   }
 
   function handleMealCreated(newMeal) {
-    setMeals((current) => [newMeal, ...current])
+    setMeals((current) => [newMeal, ...current]);
   }
 
   function handlePredictionCreated(newPrediction) {
-  setPredictions((current) => [
-    newPrediction,
-    ...current,
-  ])
-}
+    setPredictions((current) => [newPrediction, ...current]);
+  }
 
   useEffect(() => {
     async function loadTrackerData() {
-      const token = localStorage.getItem("dietly_token")
+      const token = localStorage.getItem("dietly_token");
 
       if (!token) {
-        navigate("/login", { replace: true })
-        return
+        navigate("/login", { replace: true });
+        return;
       }
 
       try {
-        const [mealData, weightData] = await Promise.all([
+        const [mealData, weightData, predictionData] = await Promise.all([
           getDietEntries(token),
           getWeightHistory(token),
-        ])
+          getPredictions(token),
+        ]);
 
-        setMeals(mealData)
-        setWeights(weightData)
+        setMeals(mealData);
+        setWeights(weightData);
+        setPredictions(predictionData);
       } catch (err) {
         if (err.response?.status === 401) {
-          localStorage.removeItem("dietly_token")
-          localStorage.removeItem("dietly_user")
-          navigate("/login", { replace: true })
-          return
+          localStorage.removeItem("dietly_token");
+          localStorage.removeItem("dietly_user");
+          navigate("/login", { replace: true });
+          return;
         }
 
-        setError(
-          err.response?.data?.detail ||
-            "Failed to load tracker data.",
-        )
+        setError(err.response?.data?.detail || "Failed to load tracker data.");
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
 
-    loadTrackerData()
-  }, [navigate])
+    loadTrackerData();
+  }, [navigate]);
 
   return (
     <main className="tracker-page">
       <div className="tracker-container">
         <header className="tracker-header">
           <div>
-            <span className="tracker-eyebrow">
-              Nutrition tracker
-            </span>
+            <span className="tracker-eyebrow">Nutrition tracker</span>
 
             <h1>Track your progress.</h1>
 
             <p>
-              Record your meals and weight to keep your nutrition
-              history organized.
+              Record your meals and weight to keep your nutrition history
+              organized.
             </p>
           </div>
 
-          <Link
-            to="/dashboard"
-            className="button button-secondary"
-          >
+          <Link to="/dashboard" className="button button-secondary">
             Back to dashboard
           </Link>
         </header>
 
-        {error && (
-          <p className="tracker-error">
-            {error}
-          </p>
-        )}
+        {error && <p className="tracker-error">{error}</p>}
 
         <div className="tracker-grid">
           <MealForm onCreated={handleMealCreated} />
@@ -125,7 +110,7 @@ function Tracker() {
         <PredictionSummary predictions={predictions} />
       </div>
     </main>
-  )
+  );
 }
 
-export default Tracker
+export default Tracker;
