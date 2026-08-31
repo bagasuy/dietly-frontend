@@ -12,7 +12,7 @@ const initialFormData = {
   consumed_at: "",
 }
 
-function MealForm() {
+function MealForm({ onCreated }) {
   const [formData, setFormData] = useState(initialFormData)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -51,7 +51,9 @@ function MealForm() {
         fat: Number(formData.fat),
       }
 
-      await createDietEntry(token, payload)
+      const createdMeal = await createDietEntry(token, payload)
+
+      onCreated(createdMeal)
 
       setFormData(initialFormData)
       setSuccess("Meal added successfully.")
