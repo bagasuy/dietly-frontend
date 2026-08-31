@@ -7,6 +7,8 @@ import PredictionForm from "../components/tracker/PredictionForm"
 import WeightForm from "../components/tracker/WeightForm"
 import WeightSummary from "../components/dashboard/WeightSummary"
 import { getDietEntries, getWeightHistory } from "../services/diet"
+import PredictionSummary from "../components/dashboard/PredictionSummary"
+
 
 function Tracker() {
   const navigate = useNavigate()
@@ -15,6 +17,9 @@ function Tracker() {
   const [weights, setWeights] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
+  const [predictions, setPredictions] = useState([])
+
+
 
   function handleWeightCreated(newWeight) {
     setWeights((current) => [newWeight, ...current])
@@ -23,6 +28,13 @@ function Tracker() {
   function handleMealCreated(newMeal) {
     setMeals((current) => [newMeal, ...current])
   }
+
+  function handlePredictionCreated(newPrediction) {
+  setPredictions((current) => [
+    newPrediction,
+    ...current,
+  ])
+}
 
   useEffect(() => {
     async function loadTrackerData() {
@@ -97,7 +109,7 @@ function Tracker() {
 
           <WeightForm onCreated={handleWeightCreated} />
 
-          <PredictionForm />
+          <PredictionForm onCreated={handlePredictionCreated} />
         </div>
 
         {isLoading ? (
@@ -109,6 +121,8 @@ function Tracker() {
         )}
 
         <WeightSummary weights={weights} />
+
+        <PredictionSummary predictions={predictions} />
       </div>
     </main>
   )

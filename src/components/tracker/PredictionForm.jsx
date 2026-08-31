@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import { createPrediction } from "../../services/prediction"
 
-function PredictionForm() {
+function PredictionForm({ onCreated }) {
   const [weight, setWeight] = useState("")
   const [prediction, setPrediction] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -24,8 +24,9 @@ function PredictionForm() {
 
       const data = await createPrediction(token, Number(weight))
 
-      setPrediction(data)
-      setWeight("")
+    setPrediction(data)
+    onCreated(data)
+    setWeight("")
     } catch (err) {
       const message =
         err.response?.data?.detail ||
