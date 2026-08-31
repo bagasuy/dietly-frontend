@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 
 import MealForm from "../components/tracker/MealForm"
+import PredictionForm from "../components/tracker/PredictionForm"
 import WeightForm from "../components/tracker/WeightForm"
 
 function Tracker() {
@@ -27,6 +28,7 @@ function Tracker() {
         <div className="tracker-grid">
           <MealForm />
           <WeightForm />
+          <PredictionForm />
         </div>
       </div>
     </main>
