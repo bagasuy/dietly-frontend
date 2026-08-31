@@ -662,3 +662,142 @@
     width: 100%;
   }
 }
+
+/* Tracker */
+
+.tracker-page {
+  min-height: 100vh;
+  padding: 40px 0 100px;
+}
+
+.tracker-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.tracker-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.tracker-eyebrow {
+  color: #c45b7d;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tracker-header h1 {
+  margin: 12px 0 0;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.tracker-header p {
+  max-width: 620px;
+  margin: 20px 0 0;
+  color: #777078;
+  line-height: 1.7;
+}
+
+.tracker-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+}
+
+.tracker-section {
+  padding: 28px;
+  background: white;
+  border: 1px solid #eee2e7;
+  border-radius: 26px;
+  box-shadow: 0 12px 40px rgba(62, 37, 49, 0.05);
+}
+
+.tracker-section-heading span {
+  color: #c45b7d;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tracker-section-heading h2 {
+  margin: 8px 0 0;
+  font-size: 1.7rem;
+  letter-spacing: -0.04em;
+}
+
+.tracker-section-heading p {
+  margin: 12px 0 0;
+  color: #777078;
+  line-height: 1.6;
+}
+
+.tracker-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.tracker-form label {
+  display: grid;
+  gap: 8px;
+  color: #3e2531;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.tracker-form input,
+.tracker-form select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #ddd0d6;
+  border-radius: 12px;
+  background: white;
+  color: #3e2531;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.tracker-form input:focus,
+.tracker-form select:focus {
+  outline: 2px solid rgba(196, 91, 125, 0.2);
+  border-color: #c45b7d;
+}
+
+.tracker-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.auth-success {
+  margin: 0;
+  color: #357a52;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 800px) {
+  .tracker-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tracker-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tracker-header .button {
+    width: 100%;
+  }
+
+  .tracker-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

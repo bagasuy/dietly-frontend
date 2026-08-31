@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 
 import MealForm from "../components/tracker/MealForm"
+import WeightForm from "../components/tracker/WeightForm"
 
 function Tracker() {
   return (
@@ -10,10 +11,11 @@ function Tracker() {
           <div>
             <span className="tracker-eyebrow">Nutrition tracker</span>
 
-            <h1>Track your meals.</h1>
+            <h1>Track your progress.</h1>
 
             <p>
-              Record your meals and keep your nutrition history organized.
+              Record your meals and weight to keep your nutrition history
+              organized.
             </p>
           </div>
 
@@ -22,7 +24,10 @@ function Tracker() {
           </Link>
         </header>
 
-        <MealForm />
+        <div className="tracker-grid">
+          <MealForm />
+          <WeightForm />
+        </div>
       </div>
     </main>
   )
