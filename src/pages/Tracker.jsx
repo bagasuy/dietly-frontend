@@ -5,17 +5,27 @@ import MealForm from "../components/tracker/MealForm"
 import MealHistory from "../components/tracker/MealHistory"
 import PredictionForm from "../components/tracker/PredictionForm"
 import WeightForm from "../components/tracker/WeightForm"
-import { getDietEntries } from "../services/diet"
+import WeightSummary from "../components/dashboard/WeightSummary"
+import { getDietEntries, getWeightHistory } from "../services/diet"
 
 function Tracker() {
   const navigate = useNavigate()
 
   const [meals, setMeals] = useState([])
+  const [weights, setWeights] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState("")
 
+  function handleWeightCreated(newWeight) {
+    setWeights((current) => [newWeight, ...current])
+  }
+
+  function handleMealCreated(newMeal) {
+    setMeals((current) => [newMeal, ...current])
+  }
+
   useEffect(() => {
-    async function loadMeals() {
+    async function loadTrackerData() {
       const token = localStorage.getItem("dietly_token")
 
       if (!token) {
@@ -24,8 +34,13 @@ function Tracker() {
       }
 
       try {
-        const data = await getDietEntries(token)
-        setMeals(data)
+        const [mealData, weightData] = await Promise.all([
+          getDietEntries(token),
+          getWeightHistory(token),
+        ])
+
+        setMeals(mealData)
+        setWeights(weightData)
       } catch (err) {
         if (err.response?.status === 401) {
           localStorage.removeItem("dietly_token")
@@ -36,14 +51,14 @@ function Tracker() {
 
         setError(
           err.response?.data?.detail ||
-            "Failed to load meal history.",
+            "Failed to load tracker data.",
         )
       } finally {
         setIsLoading(false)
       }
     }
 
-    loadMeals()
+    loadTrackerData()
   }, [navigate])
 
   return (
@@ -78,8 +93,10 @@ function Tracker() {
         )}
 
         <div className="tracker-grid">
-          <MealForm />
-          <WeightForm />
+          <MealForm onCreated={handleMealCreated} />
+
+          <WeightForm onCreated={handleWeightCreated} />
+
           <PredictionForm />
         </div>
 
@@ -90,6 +107,8 @@ function Tracker() {
         ) : (
           <MealHistory meals={meals} />
         )}
+
+        <WeightSummary weights={weights} />
       </div>
     </main>
   )

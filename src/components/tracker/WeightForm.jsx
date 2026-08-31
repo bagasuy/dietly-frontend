@@ -7,7 +7,7 @@ const initialFormData = {
   recorded_at: "",
 }
 
-function WeightForm() {
+function WeightForm({ onCreated }) {
   const [formData, setFormData] = useState(initialFormData)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -22,38 +22,40 @@ function WeightForm() {
     }))
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault()
+async function handleSubmit(event) {
+  event.preventDefault()
 
-    setError("")
-    setSuccess("")
-    setIsLoading(true)
+  setError("")
+  setSuccess("")
+  setIsLoading(true)
 
-    try {
-      const token = localStorage.getItem("dietly_token")
+  try {
+    const token = localStorage.getItem("dietly_token")
 
-      if (!token) {
-        throw new Error("Authentication token not found.")
-      }
-
-      await createWeightEntry(token, {
-        weight: Number(formData.weight),
-        recorded_at: formData.recorded_at,
-      })
-
-      setFormData(initialFormData)
-      setSuccess("Weight recorded successfully.")
-    } catch (err) {
-      const message =
-        err.response?.data?.detail ||
-        err.response?.data?.message ||
-        "Failed to record weight."
-
-      setError(message)
-    } finally {
-      setIsLoading(false)
+    if (!token) {
+      throw new Error("Authentication token not found.")
     }
+
+    const createdWeight = await createWeightEntry(token, {
+      weight: Number(formData.weight),
+      recorded_at: formData.recorded_at,
+    })
+
+    onCreated(createdWeight)
+
+    setFormData(initialFormData)
+    setSuccess("Weight recorded successfully.")
+  } catch (err) {
+    const message =
+      err.response?.data?.detail ||
+      err.response?.data?.message ||
+      "Failed to record weight."
+
+    setError(message)
+  } finally {
+    setIsLoading(false)
   }
+}
 
   return (
     <section className="tracker-section">
