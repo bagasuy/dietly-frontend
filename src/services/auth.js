@@ -20,6 +20,16 @@ export async function getCurrentUser(token) {
   return response.data
 }
 
+export async function updateCurrentUser(token, data) {
+  const response = await api.patch("/auth/me/", data, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  })
+
+  return response.data
+}
+
 export async function logoutUser(token) {
   const response = await api.post(
     "/auth/logout/",

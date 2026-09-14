@@ -33,7 +33,7 @@ function WeightSummary({ weights }) {
         <div className="weight-history">
           {weights.slice(0, 5).map((entry) => (
             <div className="weight-history-item" key={entry.id}>
-              <span>{entry.recorded_at}</span>
+              <span>{entry.recorded_at.split("T")[0]}</span>
               <strong>{entry.weight} kg</strong>
             </div>
           ))}

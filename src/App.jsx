@@ -4,6 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import Dashboard from "./pages/Dashboard"
 import Landing from "./pages/Landing"
 import Login from "./pages/Login"
+import Profile from "./pages/Profile"
 import Register from "./pages/Register"
 import Tracker from "./pages/Tracker"
 
@@ -20,6 +21,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tracker" element={<Tracker />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

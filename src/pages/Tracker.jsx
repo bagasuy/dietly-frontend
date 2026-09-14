@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import MealForm from "../components/tracker/MealForm";
 import MealHistory from "../components/tracker/MealHistory";
 import PredictionForm from "../components/tracker/PredictionForm";
 import WeightForm from "../components/tracker/WeightForm";
 import WeightSummary from "../components/dashboard/WeightSummary";
-import { getDietEntries, getWeightHistory } from "../services/diet";
 import PredictionSummary from "../components/dashboard/PredictionSummary";
+import { getDietEntries, getWeightHistory } from "../services/diet";
 import { getPredictions } from "../services/prediction";
+import AuthenticatedNavbar from "../components/AuthenticatedNavbar";
 
 function Tracker() {
   const navigate = useNavigate();
@@ -68,48 +69,49 @@ function Tracker() {
   }, [navigate]);
 
   return (
-    <main className="tracker-page">
-      <div className="tracker-container">
-        <header className="tracker-header">
-          <div>
-            <span className="tracker-eyebrow">Nutrition tracker</span>
+    <>
+      <AuthenticatedNavbar />
 
-            <h1>Track your progress.</h1>
+      <main className="tracker-page">
+        <div className="tracker-container">
+          <header className="tracker-header">
+            <div>
+              <span className="tracker-eyebrow">Nutrition tracker</span>
 
-            <p>
-              Record your meals and weight to keep your nutrition history
-              organized.
-            </p>
+              <h1>Track your progress.</h1>
+
+              <p>
+                Record your meals and weight to keep your nutrition history
+                organized.
+              </p>
+            </div>
+          </header>
+
+          {error && <p className="tracker-error">{error}</p>}
+          <div className="tracker-grid">
+            <MealForm onCreated={handleMealCreated} />
+            <WeightForm onCreated={handleWeightCreated} />
           </div>
 
-          <Link to="/dashboard" className="button button-secondary">
-            Back to dashboard
-          </Link>
-        </header>
+          <div className="tracker-prediction-grid">
+            <PredictionForm onCreated={handlePredictionCreated} />
+            <PredictionSummary predictions={predictions} />
+          </div>
 
-        {error && <p className="tracker-error">{error}</p>}
+          <div className="tracker-history-grid">
+            {isLoading ? (
+              <section className="tracker-section">
+                <p>Loading meal history...</p>
+              </section>
+            ) : (
+              <MealHistory meals={meals} />
+            )}
 
-        <div className="tracker-grid">
-          <MealForm onCreated={handleMealCreated} />
-
-          <WeightForm onCreated={handleWeightCreated} />
-
-          <PredictionForm onCreated={handlePredictionCreated} />
+            <WeightSummary weights={weights} />
+          </div>
         </div>
-
-        {isLoading ? (
-          <section className="tracker-section">
-            <p>Loading meal history...</p>
-          </section>
-        ) : (
-          <MealHistory meals={meals} />
-        )}
-
-        <WeightSummary weights={weights} />
-
-        <PredictionSummary predictions={predictions} />
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 
