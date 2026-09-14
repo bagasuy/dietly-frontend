@@ -6,22 +6,22 @@ The frontend is built using React and Vite and communicates with the Dietly back
 
 ## Tech Stack
 
-React
-Vite
-React Router
-Axios
-ESLint
-CSS
+- React
+- Vite
+- React Router
+- Axios
+- ESLint
+- CSS
 
 ## Requirements
 
 Before running the frontend, make sure the following are installed or available:
 
-Git
-Node.js
-npm
-Access to the Dietly frontend repository
-A running Dietly backend
+- Git
+- Node.js
+- npm
+- Access to the Dietly frontend repository
+- A running Dietly backend
 
 The backend and frontend should run on the same computer for local development.
 
