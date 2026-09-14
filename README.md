@@ -43,7 +43,7 @@ cd dietly-frontend
 
 ```
 
-Make sure package.json is available:
+Make sure `package.json` is available:
 
 ```bash
 
@@ -81,9 +81,9 @@ This command reads package.json and installs the dependencies required by the Di
 
 ## 3. Configure Environment Variables
 
-The frontend uses a .env file to configure the backend API base URL.
+The frontend uses a `.env` file to configure the backend API base URL.
 
-Create a .env file in the project root, in the same directory as package.json.
+Create a `.env`file in the project root, in the same directory as package.json.
 
 Example structure:
 
@@ -111,7 +111,7 @@ VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
 
 VITE_API_BASE_URL is used as the base URL for API requests from the frontend to the backend.
 
-Never commit the .env file to Git.
+Never commit the `.env` file to Git.
 
 ## 4. Make Sure the Backend Is Running
 
@@ -240,15 +240,15 @@ Dietly Frontend provides the following main pages and features.
 
 ### Public Pages
 
-Landing Page
-Login
-Register
+- Landing Page
+- Login
+- Register
 
 ### Authenticated Pages
 
-Dashboard
-Tracker
-Profile
+- Dashboard
+- Tracker
+- Profile
 
 ## Dashboard
 
@@ -256,11 +256,11 @@ The Dashboard provides an overview of the user's nutrition data and progress.
 
 The Dashboard displays:
 
-Total calories
-Current weight
-Weight progress
-Prediction
-Recent meals
+- Total calories
+- Current weight
+- Weight progress
+- Prediction
+- Recent meals
 
 The Dashboard allows users to monitor their nutrition data and progress from a single page.
 
@@ -270,23 +270,22 @@ The Tracker is used to record and monitor the user's nutrition data.
 
 Available features include:
 
-Record meals
-View meal history
-Record weight
-View weight progress
-Generate predictions
-View prediction results
+- Record meals
+- View meal history
+- Record weight
+- View weight progress
+- Generate predictions
+- View prediction results
 
 ## Profile
 
 The Profile page allows users to view and update their personal nutrition information.
 
 The following data can be updated:
-
-Height
-Current weight
-Target weight
-Daily calorie goal
+- Height
+- Current weight
+- Target weight
+- Daily calorie goal
 
 Username and email are displayed as account information and cannot be edited from the profile page.
 
@@ -299,16 +298,11 @@ API services are separated by feature:
 ```text
 
 src/
-
 └── services/
-
-├── api.js
-
-├── auth.js
-
-├── diet.js
-
-└── prediction.js
+    ├── api.js
+    ├── auth.js
+    ├── diet.js
+    └── prediction.js
 
 ```
 
@@ -316,96 +310,68 @@ src/
 
 The authentication service handles:
 
-User registration
-User login
-Get current user
-Update current user
-User logout
+- User registration
+- User login
+- Get current user
+- Update current user
+- User logout
 
 ### Diet
 
 The diet service handles:
 
-Get diet entries
-Create diet entry
-Update diet entry
-Delete diet entry
-Get weight history
-Create weight history
+- Get diet entries
+- Create diet entry
+- Update diet entry
+- Delete diet entry
+- Get weight history
+- Create weight history
 
 ### Prediction
 
 The prediction service handles:
 
-Get prediction history
-Create prediction
-
+- Get prediction history
+- Create prediction
 ## Project Structure
 
 The main frontend project structure is:
 
 ```text
-
 dietly-frontend/
-
 ├── public/
-
-│
-
+│   ├── favicon.svg
+│   └── icons.svg
 ├── src/
-
-│ ├── components/
-
-│ │ ├── dashboard/
-
-│ │ └── tracker/
-
-│ │
-
-│ ├── pages/
-
-│ │ ├── Dashboard.jsx
-
-│ │ ├── Landing.jsx
-
-│ │ ├── Login.jsx
-
-│ │ ├── Profile.jsx
-
-│ │ ├── Register.jsx
-
-│ │ └── Tracker.jsx
-
-│ │
-
-│ ├── services/
-
-│ │ ├── api.js
-
-│ │ ├── auth.js
-
-│ │ ├── diet.js
-
-│ │ └── prediction.js
-
-│ │
-
-│ ├── App.jsx
-
-│ ├── App.css
-
-│ └── main.jsx
-
-│
-
+│   ├── assets/
+│   │   ├── hero.png
+│   │   ├── react.svg
+│   │   └── vite.svg
+│   ├── components/
+│   │   ├── AuthenticatedNavbar.jsx
+│   │   ├── FeatureCard.jsx
+│   │   ├── Navbar.jsx
+│   │   └── ProtectedRoute.jsx
+│   ├── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── Landing.jsx
+│   │   ├── Login.jsx
+│   │   ├── Profile.jsx
+│   │   ├── Register.jsx
+│   │   └── Tracker.jsx
+│   ├── services/
+│   │   ├── api.js
+│   │   ├── auth.js
+│   │   ├── diet.js
+│   │   └── prediction.js
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
 ├── .gitignore
-
 ├── package.json
-
 ├── package-lock.json
-
 └── README.md
-
 ```
 
 The .env file is created locally and is intentionally excluded from the repository.
@@ -466,19 +432,18 @@ Dietly
 
 The frontend is responsible for:
 
-User interface
-User interaction
-Client-side routing
-API communication
-Displaying data received from the backend
+- User interface
+- User interaction
+- Client-side routing
+- API communication
+- Displaying data received from the backend
 
 The backend is responsible for:
-
-REST APIs
-Authentication
-Database operations
-Business logic
-Prediction API
+- REST APIs
+- Authentication
+- Database operations
+- Business logic
+- Prediction API
 
 The application communication flow is:
 
@@ -514,8 +479,3 @@ https://github.com/bagasuy/dietly-frontend
 
 https://github.com/bagasuy/dietly-backend
 
-## Backend Documentation
-
-For backend setup instructions, database configuration, API endpoints, and backend development information, see:
-
-https://github.com/bagasuy/dietly-backend
