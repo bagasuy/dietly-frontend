@@ -1,38 +1,33 @@
 # Dietly Frontend
 
-Frontend untuk aplikasi Dietly, sebuah aplikasi web untuk membantu pengguna mencatat konsumsi makanan, memantau berat badan, dan melihat prediksi perkembangan berat badan.
+Frontend for the Dietly application, a web application that helps users record meals, monitor their weight, and view weight progress predictions.
 
-Frontend dibangun menggunakan React dan Vite, serta berkomunikasi dengan backend Dietly melalui REST API.
-
----
+The frontend is built using React and Vite and communicates with the Dietly backend through REST APIs.
 
 ## Tech Stack
 
-- React
-- Vite
-- React Router
-- Axios
-- ESLint
-
----
+React
+Vite
+React Router
+Axios
+ESLint
+CSS
 
 ## Requirements
 
-Sebelum menjalankan frontend, pastikan perangkat sudah memiliki:
+Before running the frontend, make sure the following are installed or available:
 
-- Git
-- Node.js
-- npm
-- Akses ke repository frontend Dietly
-- Backend Dietly yang sudah dapat dijalankan
+Git
+Node.js
+npm
+Access to the Dietly frontend repository
+A running Dietly backend
 
-Backend dan frontend harus berjalan pada komputer yang sama untuk local development.
-
----
+The backend and frontend should run on the same computer for local development.
 
 ## 1. Clone Repository
 
-Clone repository frontend:
+Clone the Dietly frontend repository:
 
 ```bash
 
@@ -40,7 +35,7 @@ git clone https://github.com/bagasuy/dietly-frontend.git
 
 ```
 
-Masuk ke folder project:
+Enter the project directory:
 
 ```bash
 
@@ -48,7 +43,7 @@ cd dietly-frontend
 
 ```
 
-Pastikan file package.json tersedia:
+Make sure package.json is available:
 
 ```bash
 
@@ -56,7 +51,7 @@ ls
 
 ```
 
-Contoh struktur project:
+Example project structure:
 
 ```text
 
@@ -72,11 +67,9 @@ dietly-frontend/
 
 ```
 
----
-
 ## 2. Install Dependencies
 
-Install seluruh dependency yang dibutuhkan:
+Install all required frontend dependencies:
 
 ```bash
 
@@ -84,17 +77,15 @@ npm install
 
 ```
 
-Perintah ini akan membaca package.json dan menginstall dependency frontend Dietly.
-
----
+This command reads package.json and installs the dependencies required by the Dietly frontend.
 
 ## 3. Configure Environment Variables
 
-Frontend menggunakan file .env untuk menentukan alamat backend API.
+The frontend uses a .env file to configure the backend API base URL.
 
-Buat file .env di root project, yaitu folder yang sama dengan package.json.
+Create a .env file in the project root, in the same directory as package.json.
 
-Contoh struktur:
+Example structure:
 
 ```text
 
@@ -110,7 +101,7 @@ dietly-frontend/
 
 ```
 
-Isi file .env:
+Add the following configuration:
 
 ```env
 
@@ -118,17 +109,15 @@ VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
 
 ```
 
-VITE_API_BASE_URL digunakan sebagai base URL untuk request API dari frontend ke backend.
+VITE_API_BASE_URL is used as the base URL for API requests from the frontend to the backend.
 
-Jangan commit file .env ke GitHub.
+Never commit the .env file to Git.
 
----
+## 4. Make Sure the Backend Is Running
 
-## 4. Pastikan Backend Berjalan
+The Dietly frontend requires the backend to be running for features that communicate with the API.
 
-Frontend membutuhkan backend Dietly agar fitur yang menggunakan API dapat berjalan.
-
-Backend harus berjalan pada:
+The backend should be available at:
 
 ```text
 
@@ -144,22 +133,20 @@ http://127.0.0.1:8000/api/v1/
 
 ```
 
-Jika backend belum berjalan, fitur berikut tidak akan berfungsi dengan baik:
+If the backend is not running, the following features will not work properly:
 
-- Login
-- Register
-- Profile
-- Meal tracking
-- Weight tracking
-- Prediction
+Registration
+Login
+Profile
+Meal tracking
+Weight tracking
+Prediction
 
-Untuk setup backend, lihat README pada repository dietly-backend.
-
----
+For backend setup instructions, see the Dietly Backend Repository.
 
 ## 5. Run Frontend
 
-Setelah dependency dan environment variable selesai dikonfigurasi, jalankan development server:
+After installing the dependencies and configuring the environment variable, start the Vite development server:
 
 ```bash
 
@@ -167,7 +154,7 @@ npm run dev
 
 ```
 
-Vite biasanya menjalankan frontend pada:
+Vite usually starts the frontend at:
 
 ```text
 
@@ -175,17 +162,15 @@ http://localhost:5173/
 
 ```
 
-Buka alamat tersebut melalui browser.
+Open the displayed address in a web browser.
 
----
+## 6. Run the Full Application
 
-## 6. Run Full Application
-
-Karena backend dan frontend berada di repository yang berbeda, keduanya harus dijalankan secara terpisah.
+Because the backend and frontend are maintained in separate repositories, they must be run separately.
 
 ### Terminal 1 — Backend
 
-Masuk ke repository backend:
+Enter the backend repository:
 
 ```bash
 
@@ -193,9 +178,9 @@ cd dietly-backend
 
 ```
 
-Aktifkan virtual environment sesuai sistem operasi dan setup backend.
+Activate the virtual environment according to your operating system and backend setup.
 
-Kemudian jalankan:
+Then run:
 
 ```bash
 
@@ -213,9 +198,9 @@ http://127.0.0.1:8000/
 
 ### Terminal 2 — Frontend
 
-Buka terminal baru.
+Open a new terminal.
 
-Masuk ke repository frontend:
+Enter the frontend repository:
 
 ```bash
 
@@ -223,7 +208,7 @@ cd dietly-frontend
 
 ```
 
-Jalankan:
+Run:
 
 ```bash
 
@@ -239,7 +224,7 @@ http://localhost:5173/
 
 ```
 
-Setelah kedua server berjalan, buka:
+After both servers are running, open:
 
 ```text
 
@@ -247,81 +232,75 @@ http://localhost:5173/
 
 ```
 
----
+in a web browser.
 
 ## Main Features
 
-Frontend Dietly menyediakan beberapa halaman dan fitur utama.
+Dietly Frontend provides the following main pages and features.
 
 ### Public Pages
 
-- Landing Page
-- Login
-- Register
+Landing Page
+Login
+Register
 
 ### Authenticated Pages
 
-- Dashboard
-- Tracker
-- Profile
-
----
+Dashboard
+Tracker
+Profile
 
 ## Dashboard
 
-Dashboard digunakan untuk melihat ringkasan data nutrisi dan perkembangan pengguna.
+The Dashboard provides an overview of the user's nutrition data and progress.
 
-Dashboard menampilkan:
+The Dashboard displays:
 
-- Total calories
-- Current weight
-- Weight progress
-- Prediction
-- Recent meals
+Total calories
+Current weight
+Weight progress
+Prediction
+Recent meals
 
-Dashboard membantu pengguna melihat kondisi dan perkembangan mereka dalam satu halaman.
-
----
+The Dashboard allows users to monitor their nutrition data and progress from a single page.
 
 ## Tracker
 
-Tracker digunakan untuk mencatat dan memantau data nutrisi pengguna.
+The Tracker is used to record and monitor the user's nutrition data.
 
-Fitur yang tersedia:
+Available features include:
 
-- Mencatat makanan
-- Melihat meal history
-- Mencatat berat badan
-- Melihat weight progress
-- Membuat prediction
-- Melihat hasil prediction
-
----
+Record meals
+View meal history
+Record weight
+View weight progress
+Generate predictions
+View prediction results
 
 ## Profile
 
-Profile digunakan untuk melihat dan memperbarui informasi pengguna.
+The Profile page allows users to view and update their personal nutrition information.
 
-Data yang dapat diperbarui:
+The following data can be updated:
 
-- Height
-- Current weight
-- Target weight
-- Daily calorie goal
+Height
+Current weight
+Target weight
+Daily calorie goal
 
-Username dan email ditampilkan sebagai informasi akun.
-
----
+Username and email are displayed as account information and cannot be edited from the profile page.
 
 ## API Communication
 
-Frontend menggunakan Axios untuk berkomunikasi dengan backend Dietly.
+The frontend uses Axios to communicate with the Dietly backend through REST APIs.
 
-API service dipisahkan berdasarkan fitur:
+API services are separated by feature:
 
 ```text
 
-src/services/
+src/
+
+└── services/
 
 ├── api.js
 
@@ -335,37 +314,35 @@ src/services/
 
 ### Authentication
 
-Digunakan untuk:
+The authentication service handles:
 
-- Register
-- Login
-- Get current user
-- Update current user
-- Logout
+User registration
+User login
+Get current user
+Update current user
+User logout
 
 ### Diet
 
-Digunakan untuk:
+The diet service handles:
 
-- Get diet entries
-- Create diet entry
-- Update diet entry
-- Delete diet entry
-- Get weight history
-- Create weight history
+Get diet entries
+Create diet entry
+Update diet entry
+Delete diet entry
+Get weight history
+Create weight history
 
 ### Prediction
 
-Digunakan untuk:
+The prediction service handles:
 
-- Get prediction history
-- Create prediction
-
----
+Get prediction history
+Create prediction
 
 ## Project Structure
 
-Struktur utama project frontend:
+The main frontend project structure is:
 
 ```text
 
@@ -421,21 +398,23 @@ dietly-frontend/
 
 │
 
-├── .env
+├── .gitignore
 
 ├── package.json
+
+├── package-lock.json
 
 └── README.md
 
 ```
 
----
+The .env file is created locally and is intentionally excluded from the repository.
 
 ## Available Scripts
 
 ### Development
 
-Menjalankan development server:
+Start the Vite development server:
 
 ```bash
 
@@ -445,7 +424,7 @@ npm run dev
 
 ### Lint
 
-Menjalankan ESLint untuk memeriksa kode:
+Run ESLint to check the code:
 
 ```bash
 
@@ -455,7 +434,7 @@ npm run lint
 
 ### Production Build
 
-Membuat production build menggunakan Vite:
+Create a production build using Vite:
 
 ```bash
 
@@ -463,11 +442,11 @@ npm run build
 
 ```
 
----
+A successful production build generates the dist/ directory.
 
 ## Development Notes
 
-Frontend dan backend Dietly dikembangkan sebagai dua repository terpisah.
+The Dietly frontend and backend are developed and maintained as two separate repositories.
 
 ```text
 
@@ -485,22 +464,23 @@ Dietly
 
 ```
 
-Frontend bertanggung jawab terhadap:
+The frontend is responsible for:
 
-- User interface
-- User interaction
-- Client-side routing
-- API communication
+User interface
+User interaction
+Client-side routing
+API communication
+Displaying data received from the backend
 
-Backend bertanggung jawab terhadap:
+The backend is responsible for:
 
-- REST API
-- Authentication
-- Database
-- Business logic
-- Prediction API
+REST APIs
+Authentication
+Database operations
+Business logic
+Prediction API
 
-Alur komunikasi aplikasi:
+The application communication flow is:
 
 ```text
 
@@ -524,8 +504,6 @@ PostgreSQL
 
 ```
 
----
-
 ## Repository
 
 ### Frontend
@@ -533,5 +511,11 @@ PostgreSQL
 https://github.com/bagasuy/dietly-frontend
 
 ### Backend
+
+https://github.com/bagasuy/dietly-backend
+
+## Backend Documentation
+
+For backend setup instructions, database configuration, API endpoints, and backend development information, see:
 
 https://github.com/bagasuy/dietly-backend
