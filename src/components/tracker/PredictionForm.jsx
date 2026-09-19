@@ -3,15 +3,12 @@ import { useState } from "react"
 import { createPrediction } from "../../services/prediction"
 
 function PredictionForm({ onCreated }) {
-  const [weight, setWeight] = useState("")
-  const [prediction, setPrediction] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
   async function handleSubmit(event) {
     event.preventDefault()
 
-    setPrediction(null)
     setError("")
     setIsLoading(true)
 
@@ -22,13 +19,12 @@ function PredictionForm({ onCreated }) {
         throw new Error("Authentication token not found.")
       }
 
-      const data = await createPrediction(token, Number(weight))
+      const data = await createPrediction(token)
 
-    setPrediction(data)
-    onCreated(data)
-    setWeight("")
+      onCreated(data)
     } catch (err) {
       const message =
+        err.response?.data?.weight ||
         err.response?.data?.detail ||
         err.response?.data?.message ||
         "Failed to generate prediction."
@@ -43,27 +39,16 @@ function PredictionForm({ onCreated }) {
     <section className="tracker-section">
       <div className="tracker-section-heading">
         <span>Prediction</span>
-        <h2>See your projected progress</h2>
+
+        <h2>Predict your future weight</h2>
+
         <p>
-          Enter your current weight to generate a nutrition progress
-          prediction.
+          Your latest weight and meal history will be used
+          to estimate your next weight.
         </p>
       </div>
 
       <form className="tracker-form" onSubmit={handleSubmit}>
-        <label>
-          Current weight (kg)
-          <input
-            type="number"
-            value={weight}
-            onChange={(event) => setWeight(event.target.value)}
-            min="0"
-            step="0.1"
-            placeholder="e.g. 70.5"
-            required
-          />
-        </label>
-
         {error && <p className="auth-error">{error}</p>}
 
         <button
@@ -71,27 +56,11 @@ function PredictionForm({ onCreated }) {
           className="button button-primary"
           disabled={isLoading}
         >
-          {isLoading ? "Generating..." : "Generate prediction"}
+          {isLoading
+            ? "Predicting..."
+            : "Predict future weight"}
         </button>
       </form>
-
-      {prediction && (
-        <div className="prediction-result">
-          <span>Prediction result</span>
-
-          <strong>
-            {prediction.predicted_weight} kg
-          </strong>
-
-          <p>
-            Predicted change: {prediction.predicted_change}
-          </p>
-
-          <small>
-            Prediction date: {prediction.prediction_date}
-          </small>
-        </div>
-      )}
     </section>
   )
 }

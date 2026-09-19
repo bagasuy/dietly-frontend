@@ -17,10 +17,10 @@ export async function getPredictions(token) {
   return response.data
 }
 
-export async function createPrediction(token, weight) {
+export async function createPrediction(token) {
   const response = await api.post(
     "/prediction/",
-    { weight },
+    {},
     authHeaders(token),
   )
 
